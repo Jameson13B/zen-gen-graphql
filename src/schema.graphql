@@ -1,0 +1,16 @@
+type Query {
+  info: String!
+  packages: [Package!]!
+}
+
+type Mutation {
+  createPackage(date: Float!, advice: String!, picture: String!, comments: [String!]!): Package!
+}
+
+type Package {
+  id: ID!
+  date: Float!
+  advice: String!
+  picture: String!
+  comments: [String!]!
+}

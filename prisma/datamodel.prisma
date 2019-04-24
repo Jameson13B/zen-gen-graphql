@@ -1,0 +1,7 @@
+type Package {
+  id: ID! @id
+  date: Float!
+  advice: String!
+  picture: String!
+  comments: [String!]! @scalarList(strategy: RELATION)
+}

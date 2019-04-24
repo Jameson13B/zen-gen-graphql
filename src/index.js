@@ -1,21 +1,11 @@
 const { GraphQLServer } = require('graphql-yoga');
 const { prisma } = require('./generated/prisma-client');
+const Query = require('./resolvers/Query');
+const Mutation = require('./resolvers/Mutation');
 
 const resolvers = {
-  Query: {
-    info: () => `This is the API of Zen Gen`,
-    packages: (parent, args, context) => context.prisma.packages()
-  },
-  Mutation: {
-    createPackage: (parent, args, context) => {
-      return context.prisma.createPackage({
-        date: args.date,
-        advice: args.advice,
-        picture: args.picture,
-        comments: { set: args.comments }
-      });
-    }
-  }
+  Query,
+  Mutation
 };
 
 const server = new GraphQLServer({

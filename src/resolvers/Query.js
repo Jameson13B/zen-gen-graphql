@@ -10,13 +10,12 @@ const getPackage = async (parent, args, context) => {
   if (package) {
     return package;
   } else {
-    let pack = await context.prisma.createPackage({
+    return await context.prisma.createPackage({
       date: args.date,
       advice: await getAdvice(),
       picture: 'https://source.unsplash.com/daily',
       comments: { set: [] }
     });
-    return pack;
   }
 };
 

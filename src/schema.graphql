@@ -6,6 +6,8 @@ type Query {
 
 type Mutation {
   createPackage(date: String!, advice: String!, picture: String!, comments: [String!]!): Package!
+  createComment(id: ID!, comments: [String!]!): Package!
+  changeAdvice(id: ID!): Package!
 }
 
 type Package {

@@ -2,7 +2,7 @@ const axios = require('axios');
 
 const getAdvice = () => {
   // Get advice
-  axios
+  return axios
     .get('https://api.adviceslip.com/advice')
     .then(res => {
       return res.data.slip.advice;

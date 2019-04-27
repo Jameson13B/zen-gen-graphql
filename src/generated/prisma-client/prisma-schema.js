@@ -34,7 +34,7 @@ interface Node {
 
 type Package {
   id: ID!
-  date: Float!
+  date: String!
   advice: String!
   picture: String!
   comments: [String!]!
@@ -52,7 +52,7 @@ input PackageCreatecommentsInput {
 
 input PackageCreateInput {
   id: ID
-  date: Float!
+  date: String!
   advice: String!
   picture: String!
   comments: PackageCreatecommentsInput
@@ -76,7 +76,7 @@ enum PackageOrderByInput {
 
 type PackagePreviousValues {
   id: ID!
-  date: Float!
+  date: String!
   advice: String!
   picture: String!
   comments: [String!]!
@@ -105,14 +105,14 @@ input PackageUpdatecommentsInput {
 }
 
 input PackageUpdateInput {
-  date: Float
+  date: String
   advice: String
   picture: String
   comments: PackageUpdatecommentsInput
 }
 
 input PackageUpdateManyMutationInput {
-  date: Float
+  date: String
   advice: String
   picture: String
   comments: PackageUpdatecommentsInput
@@ -133,14 +133,20 @@ input PackageWhereInput {
   id_not_starts_with: ID
   id_ends_with: ID
   id_not_ends_with: ID
-  date: Float
-  date_not: Float
-  date_in: [Float!]
-  date_not_in: [Float!]
-  date_lt: Float
-  date_lte: Float
-  date_gt: Float
-  date_gte: Float
+  date: String
+  date_not: String
+  date_in: [String!]
+  date_not_in: [String!]
+  date_lt: String
+  date_lte: String
+  date_gt: String
+  date_gte: String
+  date_contains: String
+  date_not_contains: String
+  date_starts_with: String
+  date_not_starts_with: String
+  date_ends_with: String
+  date_not_ends_with: String
   advice: String
   advice_not: String
   advice_in: [String!]
@@ -176,6 +182,7 @@ input PackageWhereInput {
 
 input PackageWhereUniqueInput {
   id: ID
+  date: String
 }
 
 type PageInfo {

@@ -14,4 +14,10 @@ const server = new GraphQLServer({
   context: { prisma }
 });
 
-server.start(() => console.log(`Server is running on http://localhost:4000`));
+server.start(
+  console.log('\x1b[95m%s\x1b[0m', `Welcome to Zen Gen GraphQL Server`),
+  console.log(
+    `\nServer is running on http://localhost:4000
+    \nTo close and exit server: control + C`
+  )
+);

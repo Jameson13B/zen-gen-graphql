@@ -99,8 +99,6 @@ export interface ClientConstructor<T> {
  * Types
  */
 
-export type MutationType = "CREATED" | "UPDATED" | "DELETED";
-
 export type PackageOrderByInput =
   | "id_ASC"
   | "id_DESC"
@@ -111,13 +109,11 @@ export type PackageOrderByInput =
   | "picture_ASC"
   | "picture_DESC";
 
-export type PackageWhereUniqueInput = AtLeastOne<{
-  id: ID_Input;
-}>;
+export type MutationType = "CREATED" | "UPDATED" | "DELETED";
 
 export interface PackageCreateInput {
   id?: ID_Input;
-  date: Float;
+  date: String;
   advice: String;
   picture: String;
   comments?: PackageCreatecommentsInput;
@@ -128,7 +124,7 @@ export interface PackageCreatecommentsInput {
 }
 
 export interface PackageUpdateInput {
-  date?: Float;
+  date?: String;
   advice?: String;
   picture?: String;
   comments?: PackageUpdatecommentsInput;
@@ -138,15 +134,11 @@ export interface PackageUpdatecommentsInput {
   set?: String[] | String;
 }
 
-export interface PackageSubscriptionWhereInput {
-  mutation_in?: MutationType[] | MutationType;
-  updatedFields_contains?: String;
-  updatedFields_contains_every?: String[] | String;
-  updatedFields_contains_some?: String[] | String;
-  node?: PackageWhereInput;
-  AND?: PackageSubscriptionWhereInput[] | PackageSubscriptionWhereInput;
-  OR?: PackageSubscriptionWhereInput[] | PackageSubscriptionWhereInput;
-  NOT?: PackageSubscriptionWhereInput[] | PackageSubscriptionWhereInput;
+export interface PackageUpdateManyMutationInput {
+  date?: String;
+  advice?: String;
+  picture?: String;
+  comments?: PackageUpdatecommentsInput;
 }
 
 export interface PackageWhereInput {
@@ -164,14 +156,20 @@ export interface PackageWhereInput {
   id_not_starts_with?: ID_Input;
   id_ends_with?: ID_Input;
   id_not_ends_with?: ID_Input;
-  date?: Float;
-  date_not?: Float;
-  date_in?: Float[] | Float;
-  date_not_in?: Float[] | Float;
-  date_lt?: Float;
-  date_lte?: Float;
-  date_gt?: Float;
-  date_gte?: Float;
+  date?: String;
+  date_not?: String;
+  date_in?: String[] | String;
+  date_not_in?: String[] | String;
+  date_lt?: String;
+  date_lte?: String;
+  date_gt?: String;
+  date_gte?: String;
+  date_contains?: String;
+  date_not_contains?: String;
+  date_starts_with?: String;
+  date_not_starts_with?: String;
+  date_ends_with?: String;
+  date_not_ends_with?: String;
   advice?: String;
   advice_not?: String;
   advice_in?: String[] | String;
@@ -205,15 +203,52 @@ export interface PackageWhereInput {
   NOT?: PackageWhereInput[] | PackageWhereInput;
 }
 
-export interface PackageUpdateManyMutationInput {
-  date?: Float;
-  advice?: String;
-  picture?: String;
-  comments?: PackageUpdatecommentsInput;
+export interface PackageSubscriptionWhereInput {
+  mutation_in?: MutationType[] | MutationType;
+  updatedFields_contains?: String;
+  updatedFields_contains_every?: String[] | String;
+  updatedFields_contains_some?: String[] | String;
+  node?: PackageWhereInput;
+  AND?: PackageSubscriptionWhereInput[] | PackageSubscriptionWhereInput;
+  OR?: PackageSubscriptionWhereInput[] | PackageSubscriptionWhereInput;
+  NOT?: PackageSubscriptionWhereInput[] | PackageSubscriptionWhereInput;
 }
+
+export type PackageWhereUniqueInput = AtLeastOne<{
+  id: ID_Input;
+  date?: String;
+}>;
 
 export interface NodeNode {
   id: ID_Output;
+}
+
+export interface PackagePreviousValues {
+  id: ID_Output;
+  date: String;
+  advice: String;
+  picture: String;
+  comments: String[];
+}
+
+export interface PackagePreviousValuesPromise
+  extends Promise<PackagePreviousValues>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  date: () => Promise<String>;
+  advice: () => Promise<String>;
+  picture: () => Promise<String>;
+  comments: () => Promise<String[]>;
+}
+
+export interface PackagePreviousValuesSubscription
+  extends Promise<AsyncIterator<PackagePreviousValues>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  date: () => Promise<AsyncIterator<String>>;
+  advice: () => Promise<AsyncIterator<String>>;
+  picture: () => Promise<AsyncIterator<String>>;
+  comments: () => Promise<AsyncIterator<String[]>>;
 }
 
 export interface AggregatePackage {
@@ -265,9 +300,34 @@ export interface PackageEdgeSubscription
   cursor: () => Promise<AsyncIterator<String>>;
 }
 
+export interface PackageSubscriptionPayload {
+  mutation: MutationType;
+  node: Package;
+  updatedFields: String[];
+  previousValues: PackagePreviousValues;
+}
+
+export interface PackageSubscriptionPayloadPromise
+  extends Promise<PackageSubscriptionPayload>,
+    Fragmentable {
+  mutation: () => Promise<MutationType>;
+  node: <T = PackagePromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = PackagePreviousValuesPromise>() => T;
+}
+
+export interface PackageSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<PackageSubscriptionPayload>>,
+    Fragmentable {
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = PackageSubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = PackagePreviousValuesSubscription>() => T;
+}
+
 export interface Package {
   id: ID_Output;
-  date: Float;
+  date: String;
   advice: String;
   picture: String;
   comments: String[];
@@ -275,7 +335,7 @@ export interface Package {
 
 export interface PackagePromise extends Promise<Package>, Fragmentable {
   id: () => Promise<ID_Output>;
-  date: () => Promise<Float>;
+  date: () => Promise<String>;
   advice: () => Promise<String>;
   picture: () => Promise<String>;
   comments: () => Promise<String[]>;
@@ -285,7 +345,7 @@ export interface PackageSubscription
   extends Promise<AsyncIterator<Package>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
-  date: () => Promise<AsyncIterator<Float>>;
+  date: () => Promise<AsyncIterator<String>>;
   advice: () => Promise<AsyncIterator<String>>;
   picture: () => Promise<AsyncIterator<String>>;
   comments: () => Promise<AsyncIterator<String[]>>;
@@ -335,69 +395,17 @@ export interface PageInfoSubscription
   endCursor: () => Promise<AsyncIterator<String>>;
 }
 
-export interface PackageSubscriptionPayload {
-  mutation: MutationType;
-  node: Package;
-  updatedFields: String[];
-  previousValues: PackagePreviousValues;
-}
-
-export interface PackageSubscriptionPayloadPromise
-  extends Promise<PackageSubscriptionPayload>,
-    Fragmentable {
-  mutation: () => Promise<MutationType>;
-  node: <T = PackagePromise>() => T;
-  updatedFields: () => Promise<String[]>;
-  previousValues: <T = PackagePreviousValuesPromise>() => T;
-}
-
-export interface PackageSubscriptionPayloadSubscription
-  extends Promise<AsyncIterator<PackageSubscriptionPayload>>,
-    Fragmentable {
-  mutation: () => Promise<AsyncIterator<MutationType>>;
-  node: <T = PackageSubscription>() => T;
-  updatedFields: () => Promise<AsyncIterator<String[]>>;
-  previousValues: <T = PackagePreviousValuesSubscription>() => T;
-}
-
-export interface PackagePreviousValues {
-  id: ID_Output;
-  date: Float;
-  advice: String;
-  picture: String;
-  comments: String[];
-}
-
-export interface PackagePreviousValuesPromise
-  extends Promise<PackagePreviousValues>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-  date: () => Promise<Float>;
-  advice: () => Promise<String>;
-  picture: () => Promise<String>;
-  comments: () => Promise<String[]>;
-}
-
-export interface PackagePreviousValuesSubscription
-  extends Promise<AsyncIterator<PackagePreviousValues>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  date: () => Promise<AsyncIterator<Float>>;
-  advice: () => Promise<AsyncIterator<String>>;
-  picture: () => Promise<AsyncIterator<String>>;
-  comments: () => Promise<AsyncIterator<String[]>>;
-}
+/*
+The `Int` scalar type represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1. 
+*/
+export type Int = number;
 
 /*
 The `String` scalar type represents textual data, represented as UTF-8 character sequences. The String type is most often used by GraphQL to represent free-form human-readable text.
 */
 export type String = string;
 
-/*
-The `ID` scalar type represents a unique identifier, often used to refetch an object or as key for a cache. The ID type appears in a JSON response as a String; however, it is not intended to be human-readable. When expected as an input type, any string (such as `"4"`) or integer (such as `4`) input value will be accepted as an ID.
-*/
-export type ID_Input = string | number;
-export type ID_Output = string;
+export type Long = string;
 
 /*
 The `Boolean` scalar type represents `true` or `false`.
@@ -405,16 +413,10 @@ The `Boolean` scalar type represents `true` or `false`.
 export type Boolean = boolean;
 
 /*
-The `Int` scalar type represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1. 
+The `ID` scalar type represents a unique identifier, often used to refetch an object or as key for a cache. The ID type appears in a JSON response as a String; however, it is not intended to be human-readable. When expected as an input type, any string (such as `"4"`) or integer (such as `4`) input value will be accepted as an ID.
 */
-export type Int = number;
-
-/*
-The `Float` scalar type represents signed double-precision fractional values as specified by [IEEE 754](https://en.wikipedia.org/wiki/IEEE_floating_point). 
-*/
-export type Float = number;
-
-export type Long = string;
+export type ID_Input = string | number;
+export type ID_Output = string;
 
 /**
  * Model Metadata

@@ -1,6 +1,6 @@
 type Package {
   id: ID! @id
-  date: Float!
+  date: String! @unique
   advice: String!
   picture: String!
   comments: [String!]! @scalarList(strategy: RELATION)

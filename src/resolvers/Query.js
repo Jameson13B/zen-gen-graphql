@@ -13,9 +13,8 @@ const getPackage = async (parent, args, context) => {
     let pack = await context.prisma.createPackage({
       date: args.date,
       // Request Advice(error here - returns undefined/null)
-      advice: getAdvice(),
-      // Request Picture(pending - will use a third party API)
-      picture: `pic_${args.date}.jpg`,
+      advice: await getAdvice(),
+      picture: 'https://source.unsplash.com/daily',
       // defaults empty array
       comments: { set: [] }
     });

@@ -5,6 +5,7 @@ const info = () => `This is the API of Zen Gen`;
 const packages = (parent, args, context) => context.prisma.packages();
 
 const getPackage = async (parent, args, context) => {
+  if (args.date === null || args.date === '') throw 'Date missing: Try again';
   let package = await context.prisma.package({ date: args.date });
   // If package exist return it, else, create new package
   if (package) {

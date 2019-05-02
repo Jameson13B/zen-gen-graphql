@@ -11,11 +11,16 @@ const getPackage = async (parent, args, context) => {
   if (package) {
     return package;
   } else {
+    const advice = await getAdvice();
     return await context.prisma.createPackage({
       date: args.date,
-      advice: await getAdvice(),
+      advice: advice,
       picture: 'https://source.unsplash.com/daily',
-      comments: { set: [] }
+      comments: {
+        set: [
+          'Discuss todays picture/advice, provide some inspiration, or share some good news here.'
+        ]
+      }
     });
   }
 };
